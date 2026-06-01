@@ -1,0 +1,9 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 480 620">
+<defs><linearGradient id="g" x1="0" x2="1" y1="0" y2="1"><stop stop-color="#eaf8ff"/><stop offset="1" stop-color="#9fe9ff"/></linearGradient></defs>
+<rect width="480" height="620" rx="38" fill="url(#g)"/>
+<circle cx="240" cy="230" r="92" fill="#fff" opacity=".9"/>
+<path d="M112 520c18-102 74-158 128-158s110 56 128 158" fill="#fff" opacity=".88"/>
+<path d="M132 155l108-52 108 52-108 52-108-52z" fill="#0c4fb3"/>
+<path d="M188 188v48c0 28 104 28 104 0v-48" fill="#00a7ee"/>
+<text x="240" y="585" text-anchor="middle" font-family="Arial, sans-serif" font-size="25" font-weight="700" fill="#07548c">Thêm ảnh áo tốt nghiệp ở đây</text>
+</svg>
