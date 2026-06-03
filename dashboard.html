@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Dashboard xác nhận tham gia</title>
+  <meta name="robots" content="noindex,nofollow" />
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="./css/style.css" />
+</head>
+<body class="dashboard-page">
+  <main class="dashboard-shell">
+    <section class="dashboard-card">
+      <div class="dashboard-top">
+        <div>
+          <h1>Dashboard xác nhận tham gia</h1>
+          <p>Xem danh sách bạn bè đã xác nhận tham dự lễ tốt nghiệp.</p>
+        </div>
+        <a class="btn secondary" href="/">Về trang mời</a>
+      </div>
+
+      <form class="dashboard-login" id="dashboardLogin">
+        <input id="dashboardPassword" type="password" placeholder="Nhập mật khẩu dashboard" autocomplete="current-password" required />
+        <button class="btn primary" type="submit">Xem danh sách</button>
+      </form>
+
+      <p class="dashboard-message" id="dashboardMessage" role="status"></p>
+      <p>Tổng số xác nhận: <span class="dashboard-count" id="dashboardCount">0</span></p>
+
+      <div class="dashboard-table-wrap">
+        <table class="dashboard-table">
+          <thead>
+            <tr>
+              <th>#</th>
+              <th>Tên</th>
+              <th>Khách mời/link</th>
+              <th>Lời nhắn</th>
+              <th>Thời gian</th>
+            </tr>
+          </thead>
+          <tbody id="dashboardBody">
+            <tr><td colspan="5">Nhập mật khẩu để xem danh sách.</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+  </main>
+
+  <script>
+    const form = document.getElementById('dashboardLogin');
+    const passwordInput = document.getElementById('dashboardPassword');
+    const message = document.getElementById('dashboardMessage');
+    const count = document.getElementById('dashboardCount');
+    const body = document.getElementById('dashboardBody');
+
+    function setMessage(text, type = '') {
+      message.textContent = text;
+      message.className = `dashboard-message ${type}`.trim();
+    }
+
+    function escapeHtml(value) {
+      return String(value ?? '')
+        .replaceAll('&', '&amp;')
+        .replaceAll('<', '&lt;')
+        .replaceAll('>', '&gt;')
+        .replaceAll('"', '&quot;')
+        .replaceAll("'", '&#039;');
+    }
+
+    function formatDate(value) {
+      if (!value) return '';
+      return new Intl.DateTimeFormat('vi-VN', {
+        dateStyle: 'short',
+        timeStyle: 'short',
+        timeZone: 'Asia/Ho_Chi_Minh'
+      }).format(new Date(value));
+    }
+
+    async function loadDashboard(password) {
+      setMessage('Đang tải danh sách...', '');
+      body.innerHTML = '<tr><td colspan="5">Đang tải...</td></tr>';
+
+      const response = await fetch('/api/rsvp', {
+        headers: { 'x-dashboard-password': password }
+      });
+      const data = await response.json().catch(() => ({}));
+
+      if (!response.ok || !data.ok) {
+        throw new Error(data.message || 'Không thể tải dashboard.');
+      }
+
+      count.textContent = data.total || 0;
+      if (!data.items?.length) {
+        body.innerHTML = '<tr><td colspan="5">Chưa có ai xác nhận.</td></tr>';
+        setMessage('Đã kết nối database, nhưng chưa có dữ liệu.', 'success');
+        return;
+      }
+
+      body.innerHTML = data.items.map((item, index) => `
+        <tr>
+          <td>${index + 1}</td>
+          <td><strong>${escapeHtml(item.name)}</strong></td>
+          <td>${escapeHtml(item.guest || item.slug || 'Trang chung')}</td>
+          <td>${escapeHtml(item.note || '')}</td>
+          <td>${escapeHtml(formatDate(item.created_at))}</td>
+        </tr>
+      `).join('');
+      setMessage('Tải danh sách thành công.', 'success');
+    }
+
+    form.addEventListener('submit', async (event) => {
+      event.preventDefault();
+      const password = passwordInput.value;
+      try {
+        sessionStorage.setItem('dashboard_password', password);
+        await loadDashboard(password);
+      } catch (error) {
+        setMessage(error.message, 'error');
+        body.innerHTML = '<tr><td colspan="5">Không thể tải dữ liệu.</td></tr>';
+      }
+    });
+
+    const savedPassword = sessionStorage.getItem('dashboard_password');
+    if (savedPassword) {
+      passwordInput.value = savedPassword;
+      loadDashboard(savedPassword).catch(() => {});
+    }
+  </script>
+</body>
+</html>

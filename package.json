@@ -1,0 +1,17 @@
+{
+  "name": "graduation-invitation-vercel",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Graduation invitation with RSVP dashboard for Vercel and PostgreSQL/Neon.",
+  "scripts": {
+    "dev": "npx vercel dev",
+    "build": "echo \"Static project - no build step required\""
+  },
+  "dependencies": {
+    "pg": "^8.13.1",
+    "@vercel/blob": "^0.27.3"
+  },
+  "engines": {
+    "node": "22.x"
+  }
+}

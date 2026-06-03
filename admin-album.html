@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Admin Album</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="./css/style.css" />
+  <style>
+    body.admin-album-page { min-height: 100vh; display: grid; place-items: center; padding: 24px; font-family: 'Be Vietnam Pro', sans-serif; }
+    .upload-card { width: min(680px, 100%); padding: 28px; border-radius: 28px; background: rgba(255,255,255,.88); box-shadow: 0 24px 80px rgba(10, 35, 80, .22); border: 1px solid rgba(255,255,255,.7); }
+    .upload-card h1 { margin: 0 0 8px; font-size: clamp(28px, 5vw, 44px); }
+    .upload-card p { color: #53627a; line-height: 1.7; }
+    .upload-form { display: grid; gap: 14px; margin-top: 22px; }
+    .upload-form label { font-weight: 700; color: #17325f; }
+    .upload-form input { width: 100%; padding: 14px 16px; border-radius: 16px; border: 1px solid #d6def0; font: inherit; background: #fff; }
+    .preview-box { display: none; margin-top: 12px; border-radius: 18px; overflow: hidden; background: #eef3ff; }
+    .preview-box img { width: 100%; max-height: 360px; object-fit: contain; display: block; }
+    .admin-actions { display: flex; flex-wrap: wrap; gap: 12px; margin-top: 18px; }
+    .status-box { margin-top: 18px; padding: 14px 16px; border-radius: 16px; background: #eef7ff; color: #17325f; line-height: 1.6; word-break: break-word; }
+    .status-box.error { background: #fff1f1; color: #a82929; }
+    .status-box.success { background: #effbf2; color: #1b7b3a; }
+  </style>
+</head>
+<body class="admin-album-page album-page">
+  <div class="aurora"></div>
+  <div class="stars" aria-hidden="true"></div>
+
+  <main class="upload-card">
+    <a class="album-back" href="/album">← Xem album</a>
+    <span class="map-badge">🖼️ Admin Album</span>
+    <h1>Tải ảnh lên album</h1>
+    <p>Chọn ảnh, nhập ghi chú rồi bấm upload. Ảnh sẽ được lưu lên Vercel Blob, link ảnh được lưu vào database và tự hiện trong trang album.</p>
+
+    <div class="upload-form">
+      <label for="adminPassword">Mật khẩu upload</label>
+      <input id="adminPassword" type="password" placeholder="Nhập mật khẩu nếu bạn có đặt ADMIN_ALBUM_PASSWORD" autocomplete="current-password" />
+
+      <label for="photoInput">Chọn ảnh</label>
+      <input id="photoInput" type="file" accept="image/*" />
+
+      <label for="captionInput">Ghi chú ảnh</label>
+      <input id="captionInput" type="text" placeholder="Ví dụ: Ảnh chụp cùng nhóm bạn thân" maxlength="180" />
+    </div>
+
+    <div class="preview-box" id="previewBox">
+      <img id="previewImage" alt="Xem trước ảnh upload" />
+    </div>
+
+    <div class="admin-actions">
+      <button class="btn primary" id="uploadBtn" type="button">Upload ảnh</button>
+      <a class="btn secondary" href="/album">Mở album</a>
+      <a class="btn secondary" href="/">Về trang chính</a>
+    </div>
+
+    <div class="status-box" id="statusBox">Chưa upload ảnh nào.</div>
+  </main>
+
+  <script>
+    const photoInput = document.getElementById('photoInput');
+    const captionInput = document.getElementById('captionInput');
+    const adminPassword = document.getElementById('adminPassword');
+    const uploadBtn = document.getElementById('uploadBtn');
+    const statusBox = document.getElementById('statusBox');
+    const previewBox = document.getElementById('previewBox');
+    const previewImage = document.getElementById('previewImage');
+
+    function setStatus(message, type = '') {
+      statusBox.className = `status-box ${type}`.trim();
+      statusBox.innerHTML = message;
+    }
+
+    photoInput.addEventListener('change', () => {
+      const file = photoInput.files[0];
+      if (!file) return;
+      previewImage.src = URL.createObjectURL(file);
+      previewBox.style.display = 'block';
+    });
+
+    uploadBtn.addEventListener('click', async () => {
+      const file = photoInput.files[0];
+      const caption = captionInput.value.trim();
+      const password = adminPassword.value.trim();
+
+      if (!file) {
+        setStatus('Bạn chưa chọn ảnh.', 'error');
+        return;
+      }
+
+      if (!file.type.startsWith('image/')) {
+        setStatus('File này không phải ảnh.', 'error');
+        return;
+      }
+
+      uploadBtn.disabled = true;
+      setStatus('Đang upload ảnh...');
+
+      try {
+        const res = await fetch('/api/upload-album', {
+          method: 'POST',
+          headers: {
+            'content-type': file.type,
+            'x-filename': encodeURIComponent(file.name),
+            'x-caption': encodeURIComponent(caption),
+            'x-admin-password': password
+          },
+          body: file
+        });
+
+        const data = await res.json();
+
+        if (!res.ok || !data.ok) {
+          throw new Error(data.message || data.error || 'Upload thất bại');
+        }
+
+        setStatus(`Upload thành công ✅<br><a href="${data.item.url}" target="_blank" rel="noopener">Mở ảnh đã upload</a><br><a href="/album">Xem trong album</a>`, 'success');
+        photoInput.value = '';
+        captionInput.value = '';
+        previewBox.style.display = 'none';
+      } catch (error) {
+        setStatus(`Upload lỗi: ${error.message}`, 'error');
+      } finally {
+        uploadBtn.disabled = false;
+      }
+    });
+  </script>
+</body>
+</html>

@@ -1,0 +1,18 @@
+{
+  "version": 2,
+  "outputDirectory": ".",
+  "rewrites": [
+    {
+      "source": "/dashboard",
+      "destination": "/dashboard.html"
+    },
+    {
+      "source": "/album",
+      "destination": "/album.html"
+    },
+    {
+      "source": "/admin-album",
+      "destination": "/admin-album.html"
+    }
+  ]
+}

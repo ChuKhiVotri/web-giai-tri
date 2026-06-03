@@ -1,0 +1,219 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Thư mời dự lễ tốt nghiệp</title>
+  <meta name="description" content="Thư mời dự lễ tốt nghiệp" />
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="./css/style.css" />
+  <script src="./data/friends.js"></script>
+</head>
+<body>
+  <div class="loader" id="loader">
+    <div class="loader-ring"></div>
+    <p>Đang mở thư mời...</p>
+  </div>
+
+  <div class="aurora"></div>
+  <div class="stars" aria-hidden="true"></div>
+
+  <main class="page-shell">
+    <section class="invite-card" aria-label="Thiệp mời tốt nghiệp">
+      <div class="orb orb-one"></div>
+      <div class="orb orb-two"></div>
+      <div class="orbit orbit-a"></div>
+      <div class="orbit orbit-b"></div>
+
+      <header class="card-header reveal">
+        <img src="./assets/school-faculty-logo.png" alt="Logo trường và khoa" class="brand-logo" />
+        <p class="eyebrow">Graduation Ceremony Invitation</p>
+      </header>
+
+      <div class="hero-content reveal">
+        <p class="hello">Thân gửi <span id="guestName">bạn</span>,</p>
+        <h1>Thư mời dự lễ<br />tốt nghiệp</h1>
+        <p class="lead">
+          Mình rất vui và trân trọng mời bạn đến tham dự buổi lễ tốt nghiệp của mình.
+          Sự hiện diện của bạn sẽ là một phần thật ý nghĩa trong cột mốc đặc biệt này.
+        </p>
+      </div>
+
+      <div class="graduate-box graduate-profile reveal">
+        <div class="graduate-text">
+          <span class="label">Tân cử nhân</span>
+          <strong id="graduateName">Lê Hiệp Thuận</strong>
+        </div>
+      </div>
+
+      <div class="my-photo-slot hero-graduation-photo reveal" aria-label="Vị trí ảnh mặc áo tốt nghiệp">
+        <img src="./assets/DSC0145.jpeg" alt="Vị trí để ảnh Lê Hiệp Thuận mặc áo tốt nghiệp" />
+      </div>
+
+      <div class="info-grid reveal">
+        <article class="info-item shine">
+          <span>Ngày</span>
+          <strong id="eventDate">Thứ tư, 10/06/2026</strong>
+        </article>
+        <article class="info-item shine">
+          <span>Thời gian</span>
+          <strong id="eventTime">15:00</strong>
+        </article>
+        <article class="info-item wide shine">
+          <span>Địa điểm</span>
+          <strong id="eventPlace">Trường Đại học Công nghệ Thông tin - ĐHQG TP.HCM</strong>
+        </article>
+      </div>
+
+
+      <section class="countdown-panel reveal" aria-label="Đếm ngược tới ngày tốt nghiệp">
+        <div class="countdown-copy">
+          <span class="map-badge">⏳ Đếm ngược tới lễ tốt nghiệp</span>
+          <h2>Chỉ còn</h2>
+          <p id="countdownMessage">Đếm từng giây tới khoảnh khắc đặc biệt này.</p>
+        </div>
+        <div class="countdown-clock" id="graduationCountdown">
+          <div class="countdown-box">
+            <strong id="countdownDays">00</strong>
+            <span>Ngày</span>
+          </div>
+          <div class="countdown-box">
+            <strong id="countdownHours">00</strong>
+            <span>Giờ</span>
+          </div>
+          <div class="countdown-box">
+            <strong id="countdownMinutes">00</strong>
+            <span>Phút</span>
+          </div>
+          <div class="countdown-box seconds">
+            <strong id="countdownSeconds">00</strong>
+            <span>Giây</span>
+          </div>
+        </div>
+      </section>
+
+
+
+      <section class="friend-panel reveal" aria-label="Ảnh kỷ niệm với khách mời">
+        <div class="photo-gallery modern-slider" id="friendGallery">
+          <div class="photo-glow"></div>
+
+          <div class="slider-wrapper" id="sliderWrapper">
+            <img id="friendPhoto" class="slider-image active" src="./assets/photos/yen-chi-solo.jpg" alt="Ảnh của khách mời" />
+          </div>
+
+          <div class="slider-dots" id="sliderDots"></div>
+
+          <span class="photo-ribbon">Ảnh kỷ niệm</span>
+        </div>
+        <div class="friend-copy">
+          <span class="map-badge">💙 Góc riêng của tụi mình</span>
+          <h2 id="friendTitle">Vài tấm hình giữ lại cho tụi mình</h2>
+          <p id="friendMessage">Mình đã chuẩn bị một lời mời riêng cho bạn. Hãy đến chung vui và chụp ảnh cùng mình nhé.</p>
+        </div>
+      </section>
+
+      <section class="calendar-panel reveal" aria-label="Lịch ngày dự lễ">
+        <div class="calendar-copy">
+          <span class="map-badge">🗓️ Nhớ ngày này nha</span>
+          <h2>Mình khoanh sẵn ngày này rồi nha</h2>
+          <p>Thứ tư, 10/06/2026 — 3 giờ chiều, ghé chung vui với mình nha.</p>
+        </div>
+        <div class="calendar-card" aria-label="Lịch tháng 06 năm 2026">
+          <div class="calendar-top">
+            <span>JUNE</span>
+            <strong>2026</strong>
+          </div>
+          <div class="calendar-grid calendar-weekdays">
+            <span>T2</span><span>T3</span><span>T4</span><span>T5</span><span>T6</span><span>T7</span><span>CN</span>
+          </div>
+          <div class="calendar-grid calendar-days">
+            <span>1</span><span>2</span><span>3</span><span>4</span><span>5</span><span>6</span><span>7</span>
+            <span>8</span><span>9</span><span class="event-day">10</span><span>11</span><span>12</span><span>13</span><span>14</span>
+            <span>15</span><span>16</span><span>17</span><span>18</span><span>19</span><span>20</span><span>21</span>
+            <span>22</span><span>23</span><span>24</span><span>25</span><span>26</span><span>27</span><span>28</span>
+            <span>29</span><span>30</span><span></span><span></span><span></span><span></span><span></span>
+          </div>
+        </div>
+      </section>
+
+      <section class="map-panel reveal" aria-label="Bản đồ địa điểm tổ chức">
+        <div class="map-copy">
+          <span class="map-badge">📍 Bản đồ trường</span>
+          <h2>Địa điểm tổ chức</h2>
+          <p>Bấm vào bản đồ hoặc nút bên dưới để mở chỉ đường trên Google Maps.</p>
+        </div>
+        <a id="mapPreviewLink" class="map-frame" href="#" target="_blank" rel="noreferrer" aria-label="Mở bản đồ Google Maps">
+          <iframe
+            id="mapEmbed"
+            title="Bản đồ trường"
+            loading="lazy"
+            referrerpolicy="no-referrer-when-downgrade"
+            src="about:blank">
+          </iframe>
+          <span class="map-overlay">Mở Google Maps</span>
+        </a>
+      </section>
+
+      <div class="actions reveal">
+        <a id="mapLink" class="btn primary" href="#" target="_blank" rel="noreferrer">Xem bản đồ</a>
+        <button class="btn secondary" id="copyInvite">Copy link mời</button>
+        <a class="btn secondary" id="albumButton" href="./album.html">📖 Xem album kỷ niệm</a>
+        <button class="btn secondary" id="copyAllLinks">Tạo danh sách link bạn bè</button>
+        <button class="btn secondary" id="downloadCard">
+          <span id="downloadLabel">⬇ Tải thiệp</span>
+        </button>
+      </div>
+
+      
+
+      <section class="rsvp-panel reveal" aria-label="Xác nhận tham gia">
+        <div class="rsvp-copy">
+          <span class="map-badge">✅ Xác nhận tham gia</span>
+          <h2>Bạn đến chung vui với mình chứ?</h2>
+          <p>Chỉ cần nhập tên của bạn, mình sẽ lưu lại trong danh sách khách mời.</p>
+        </div>
+        <form class="rsvp-form" id="rsvpForm">
+          <label for="rsvpName">Tên của bạn</label>
+          <div class="rsvp-row">
+            <input id="rsvpName" name="name" type="text" maxlength="80" autocomplete="name" placeholder="Ví dụ: Nguyễn Văn A" required />
+            <button class="btn primary" type="submit">Xác nhận</button>
+          </div>
+          <textarea id="rsvpNote" name="note" maxlength="240" rows="3" placeholder="Lời nhắn nhỏ nếu muốn..."></textarea>
+          <p class="rsvp-status" id="rsvpStatus" role="status"></p>
+        </form>
+      </section>
+
+      <section class="signature-section reveal" aria-label="Chữ ký">
+        <a href="tel:0372103008" class="signature-phone" aria-label="Gọi số điện thoại 0372 103 008">
+          <span class="signature-phone-icon" aria-hidden="true">☎</span>
+          <span>0372 103 008</span>
+        </a>
+        <p class="signature-note">Ký tên,</p>
+        <img src="./assets/signature-hacker.png" alt="Chữ ký hacker Lê Hiệp Thuận" class="signature-image hacker-signature" />
+      </section>
+
+      <footer class="card-footer reveal">
+        <p>Hẹn gặp bạn tại buổi lễ tốt nghiệp của mình 💙</p>
+      </footer>
+    </section>
+  </main>
+
+  <button class="floating-music" id="musicToggle" type="button" aria-label="Bật hoặc tắt nhạc nền">
+    <span class="music-icon">♪</span>
+    <span class="music-pulse"></span>
+  </button>
+  <audio id="bgMusic" src="./assets/audio/background.mp3" preload="auto"></audio>
+  <canvas id="confettiCanvas" aria-hidden="true"></canvas>
+  <div class="photo-lightbox" id="photoLightbox" aria-hidden="true">
+    <button class="lightbox-close" id="lightboxClose" type="button" aria-label="Đóng ảnh">×</button>
+    <img id="lightboxImage" src="" alt="Ảnh kỷ niệm phóng to" />
+  </div>
+
+  <div class="toast" id="toast">Đã copy link mời!</div>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/dom-to-image-more/3.4.0/dom-to-image-more.min.js"></script>
+  <script src="./js/main.js"></script>
+</body>
+</html>

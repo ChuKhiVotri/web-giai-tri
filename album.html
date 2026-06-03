@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Album kỷ niệm</title>
+  <meta name="description" content="Album ảnh kỷ niệm dạng sách lật trang" />
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="./css/style.css" />
+  <script src="./data/album.js"></script>
+</head>
+<body class="album-page">
+  <div class="aurora"></div>
+  <div class="stars" aria-hidden="true"></div>
+
+  <main class="album-shell">
+    <section class="album-hero reveal">
+      <a class="album-back" href="/">← Về thư mời</a>
+      <span class="map-badge">📖 Album kỷ niệm</span>
+      <h1>Cuốn sách ảnh của tụi mình</h1>
+      <p>Lưu lại những tấm hình chụp chung với bạn bè. Bấm nút hoặc bấm vào mép sách để lật từng trang.</p>
+      <p id="albumLoading">Đang tải ảnh upload từ web...</p>
+      <a class="btn secondary" href="/admin-album">🖼️ Thêm ảnh vào album</a>
+    </section>
+
+    <section class="memory-book-wrap reveal" aria-label="Album ảnh dạng sách lật trang">
+      <button class="book-nav book-prev" id="bookPrev" type="button" aria-label="Trang trước">‹</button>
+
+      <div class="memory-book" id="memoryBook">
+        <article class="book-cover book-page active" data-page="0">
+          <div class="cover-shine"></div>
+          <span>Graduation Memories</span>
+          <h2>Album<br />bạn bè</h2>
+          <p>Những khoảnh khắc này sẽ được giữ lại như một phần của ngày tốt nghiệp.</p>
+          <button class="btn primary open-book" id="openBook" type="button">Mở album</button>
+        </article>
+      </div>
+
+      <button class="book-nav book-next" id="bookNext" type="button" aria-label="Trang sau">›</button>
+    </section>
+
+    <div class="book-counter reveal" id="bookCounter">Bìa album</div>
+
+    <section class="album-guide reveal">
+      <h2>Cách thêm ảnh của bạn</h2>
+      <p>Bạn có thể vào trang <strong>/admin-album</strong> để upload ảnh trực tiếp sau khi deploy. Ảnh sẽ lưu trên Vercel Blob và tự hiện trong album.</p>
+    </section>
+  </main>
+
+  <div class="photo-lightbox" id="photoLightbox" aria-hidden="true">
+    <button class="lightbox-close" id="lightboxClose" type="button" aria-label="Đóng ảnh">×</button>
+    <img id="lightboxImage" src="" alt="Ảnh album phóng to" />
+  </div>
+
+  <script src="./js/album.js"></script>
+</body>
+</html>
